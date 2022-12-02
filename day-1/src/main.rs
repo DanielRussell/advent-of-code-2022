@@ -2,7 +2,7 @@
 use std::io;
 
 fn main() {
-    let mut most_calories = 0;
+    let mut most_calories = [0, 0, 0];
     let mut this_calories = 0;
     
     loop {
@@ -16,8 +16,17 @@ fn main() {
 
         if buffer.trim() == "" {
             println!("elf with {} calories", this_calories);
-            if this_calories > most_calories {
-                most_calories = this_calories;
+            if this_calories > most_calories[2] {
+                most_calories[2] = this_calories;
+            }
+            if this_calories > most_calories[1] {
+                most_calories[2] = most_calories[1];
+                most_calories[1] = this_calories;
+            }
+            if this_calories > most_calories[0] {
+                most_calories[2] = most_calories[1];
+                most_calories[1] = most_calories[0];
+                most_calories[0] = this_calories;
             }
             this_calories = 0;
         } else {
@@ -26,5 +35,6 @@ fn main() {
             this_calories += cal;
         }
     }
-    println!("-> {} <-", most_calories);
+    println!("-> {} {} {} <-", most_calories[0], most_calories[1], most_calories[2]);
+    println!("=> {} <=", most_calories[0] + most_calories[1] + most_calories[2]);
 }
